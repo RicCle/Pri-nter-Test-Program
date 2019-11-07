@@ -1,0 +1,59 @@
+Printer Test
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Attach",
+            "port": 9229
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Attach",
+            "port": 9229
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Program",
+            "program": "${file}"
+        }
+    ]
+}
+import com.bcl.easypdf.printer.*;
+import java.io.File;
+
+public class TestPrinter
+{
+   public static void main(String[] args) throws Exception
+   {
+      if(args.length != 2)
+         return;
+
+      File inputFile = new File(args[0]);
+      String inputFileName = inputFile.getCanonicalPath();
+
+      File outputFile = new File(args[1]);
+      String outputFileName = outputFile.getCanonicalPath();
+
+      Printer printer = new Printer();
+      try
+      {
+         PrintJob printjob = printer.getPrintJob();
+         printjob.PrintOut(inputFileName, outputFileName);
+      }
+      catch(PrinterException ex)
+      {
+         System.out.println(ex.getMessage());
+      }
+      finally
+      {
+         printer.dispose();
+      }
+   }
+}
